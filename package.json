@@ -1,0 +1,29 @@
+{
+  "name": "percentile-feedback-app",
+  "version": "0.0.1",
+  "description": "webapp to display daily productivity embracing the percentile feedback approach",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reustonium/percentile-feedback-app.git"
+  },
+  "keywords": [
+    "nodejs",
+    "percentile-feedback",
+    "productivity"
+  ],
+  "author": "reustonium",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/reustonium/percentile-feedback-app/issues"
+  },
+  "homepage": "https://github.com/reustonium/percentile-feedback-app",
+  
+  "engines": {
+    "node": "0.10.x"
+  }
+
+}
