@@ -1,6 +1,10 @@
 {
-  "name": "application-name",
+  "name": "percentile-feedback-app",
+  "description": "for tracking productivity using the percentile feedback technique inspired by Nick Winter",
   "version": "0.0.1",
+  "engines": {
+    "node": "0.10.x"
+  },
   "private": true,
   "scripts": {
     "start": "node app.js"
