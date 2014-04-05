@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+- 0.1
+deploy:
+  provider: heroku
+  api_key:
+    secure: PfaQLJAkNBP0PIO5YLu8rHNkkMApOYLNg10fJYhDIIgbdk4RxQdHHaw0n+PMFdJYZkDwMYwOlHU4GOo8fGevUnCx96bjozWjfWEYj/kMAgPOPFMMAghbNXbFWlYZbdPjZ6y3YAcPO2WRTThO31c7JQ3kxwWGtGQ1uvJLIbQQ55w=
+  app: salty-gorge-4979
+  on:
+    repo: reustonium/percentile-feedback-app
