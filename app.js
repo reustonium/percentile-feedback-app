@@ -11,7 +11,7 @@ var user = require('./models/user');
 
 var app = express();
 
-var mongoURI = process.env.MONGOLAB_URI) || 'mongodb://localhost/pfa';
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/pfa';
 mongoose.connect(mongoURI);
 
 // all environments
