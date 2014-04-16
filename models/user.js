@@ -1,6 +1,10 @@
 //user.js
 var mongoose = require('mongoose');
+var schema = mongoose.Schema;
 
-modules.export = mongoose.model('user',{
-	username: String
+var UserSchema = new schema({
+	username: String,
+	key: String
 });
+
+module.exports = mongoose.model('User', UserSchema);

@@ -10,8 +10,10 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "*",
-    "jade": "*",
-    "mongoose": "*"
+    "express": "4.0.x",
+    "jade": "1.3.x",
+    "mongoose": "3.8.x",
+    "body-parser": "1.0.x",
+    "request": "2.x.x"
   }
 }

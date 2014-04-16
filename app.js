@@ -2,60 +2,62 @@
  * Module dependencies.
  */
 var express = require('express');
-var routes = require('./routes');
-var mongoose = require('mongoose');
-var user = require('./routes/user');
-var http = require('http');
-var path = require('path');/*
-var user = require('./models/user');*/
-
 var app = express();
+var bodyParser = require('body-parser');
+app.use(bodyParser());
 
-var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/pfa';
-mongoose.connect(mongoURI);
+var mongoose = require('mongoose');
+var User = require('./models/user');
 
 // all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.methodOverride());
-app.use(express.cookieParser('your secret here'));
-app.use(express.session());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+var port = process.env.PORT || 8080;
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/pfa';
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
+mongoose.connect(mongoURI);
 
-app.get('*', function(req, res){
-	res.sendfile('./public/index.html');
+var request = require('request');
+
+/*
+Routes for our API
+*/
+var routerAPI = express.Router();
+routerAPI.use(function(req, res, next){
+	console.log('api request made');
+	next();
 });
+routerAPI.route('/users')
+	.post(function(req, res){
+		var user = new User();
+		user.username = req.body.name;
+		user.key = req.body.key;
+		user.save(function(err){
+			if(err)
+				res.send(err);
+			res.json({message: 'user created'});
+		});
+	})
+	.get(function(req, res){
+		User.find(function(err, users){
+			if(err)
+				res.send(err)
+			res.json(users)
+		})
+	})
+app.use('/api', routerAPI);
 
-app.get('/api/users', function(req, res){
-	user.find(function(err, users){
-		if(err)
-			res.send(err);
-		res.json(users);
-	});
+var router = express.Router();
+router.use(function(req, res, next){
+	console.log('html request made');
+	next();
 });
-
-app.post('/api/users', function(req, res){
-	user.create({
-		username: req.body.text
-	}, function(err, user){
-		if(err)
-			res.send(err);
-		res.send("way to go");
-	});
+router.route('/user/:uid')
+	.get(function(req, res){
+		res.json({
+			message: req.params.uid
+		});
 });
+app.use('/', router);
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
-  console.log(process.env);
+var server = app.listen(port, function(){
+	console.log('Express server listening on port ' + server.address().port);
 });
