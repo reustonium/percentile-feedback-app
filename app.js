@@ -11,8 +11,8 @@ var user = require('./models/user');*/
 
 var app = express();
 
-/*var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/pfa';
-mongoose.connect(mongoURI);*/
+var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/pfa';
+mongoose.connect(mongoURI);
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -37,7 +37,7 @@ app.get('*', function(req, res){
 	res.sendfile('./public/index.html');
 });
 
-/*app.get('/api/users', function(req, res){
+app.get('/api/users', function(req, res){
 	user.find(function(err, users){
 		if(err)
 			res.send(err);
@@ -53,7 +53,7 @@ app.post('/api/users', function(req, res){
 			res.send(err);
 		res.send("way to go");
 	});
-});*/
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
