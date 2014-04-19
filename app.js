@@ -5,6 +5,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 app.use(bodyParser());
+app.use(express.static(__dirname + '/public'));
 
 var mongoose = require('mongoose');
 var User = require('./models/user');
