@@ -47,11 +47,14 @@ routerAPI.route('/users')
 	});
 routerAPI.route('/daily/:user_key')
 	.get(function(req, res){
-		request('https://www.rescuetime.com/anapi/data?key=' 
+		request({
+			url: 'https://www.rescuetime.com/anapi/data?key=' 
 			+ req.params.user_key 
 			+ '&format=json&by=interval&rk=productivity&re=' 
-			+ moment().format('YYYY-MM-DD'), function(err, response, body){	
-				res.json(body);
+			+ moment().format('YYYY-MM-DD'),
+			json: true}
+			, function(err, response, body){	
+			res.json(body);
 		})	
 	})
 app.use('/api', routerAPI);
