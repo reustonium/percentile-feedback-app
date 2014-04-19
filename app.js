@@ -16,6 +16,7 @@ var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/pfa';
 mongoose.connect(mongoURI);
 
 var request = require('request');
+var moment = require('moment');
 
 /*
 Routes for our API
@@ -42,6 +43,15 @@ routerAPI.route('/users')
 				res.send(err)
 			res.json(users)
 		})
+	});
+routerAPI.route('/daily/:user_key')
+	.get(function(req, res){
+		request('https://www.rescuetime.com/anapi/data?key=' 
+			+ req.params.user_key 
+			+ '&format=json&by=interval&rk=productivity&re=' 
+			+ moment().format('YYYY-MM-DD'), function(err, response, body){	
+				res.json(body);
+		})	
 	})
 app.use('/api', routerAPI);
 
@@ -50,11 +60,9 @@ router.use(function(req, res, next){
 	console.log('html request made');
 	next();
 });
-router.route('/user/:uid')
+router.route('/')
 	.get(function(req, res){
-		res.json({
-			message: req.params.uid
-		});
+		res.sendfile('./public/index.html')
 });
 app.use('/', router);
 
