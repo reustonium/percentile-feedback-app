@@ -19,6 +19,8 @@ mongoose.connect(mongoURI);
 var request = require('request');
 var moment = require('moment');
 
+var pfa = require('./controllers/pfa');
+
 /*
 Routes for our API
 */
@@ -54,7 +56,7 @@ routerAPI.route('/daily/:user_key')
 			+ moment().format('YYYY-MM-DD'),
 			json: true}
 			, function(err, response, body){	
-			res.json(body);
+			res.json(pfa.trimData(body));
 		})	
 	})
 app.use('/api', routerAPI);
