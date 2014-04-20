@@ -15,6 +15,10 @@
     "mongoose": "3.8.x",
     "body-parser": "1.0.x",
     "request": "2.x.x",
-    "moment": "2.x.x"
+    "moment": "2.x.x",
+    "bower": "1.3.x"
+  },
+  "scripts": {
+    "postinstall": "node_modules/bower/bin/bower install"
   }
 }

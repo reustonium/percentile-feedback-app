@@ -34,5 +34,5 @@ exports.trimData = function(rawData){
 	    }
 	}
 	console.log(stuff);
-	return output;
+	return stuff;
 }
