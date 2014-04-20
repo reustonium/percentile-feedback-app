@@ -29,7 +29,7 @@ exports.trimData = function(rawData){
 	for(var i=0; i<output.length; i++){
 	    if(i===0){stuff.push([output[i][0], output[i][1]]);}
 	    else{
-	        var val = output[i][1] + output[i-1][1];
+	        var val = output[i][1] + stuff[i-1][1];
 	        stuff.push([output[i][0], val]);
 	    }
 	}
