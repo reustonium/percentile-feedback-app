@@ -7,8 +7,6 @@ exports.trimData = function(rawData){
 	    }
 	}
 
-	console.log(data);
-
 	var output = [];
 	for (var i=0; i<data.length; i++){
 	    if(i===0){output.push([data[i][0], data[i][1]]);}
@@ -22,7 +20,6 @@ exports.trimData = function(rawData){
 	        }
 	    }
 	}
-	console.log(output);
 
 	var stuff = [];
 
@@ -33,6 +30,6 @@ exports.trimData = function(rawData){
 	        stuff.push([output[i][0], val]);
 	    }
 	}
-	console.log(stuff);
+
 	return stuff;
 }
