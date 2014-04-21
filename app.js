@@ -58,6 +58,20 @@ routerAPI.route('/daily/:user_key')
 			, function(err, response, body){	
 			res.json(pfa.trimData(body));
 		})	
+	});
+routerAPI.route('/monthly/:user_key')
+	.get(function(req, res){
+		request({
+			url: 'https://www.rescuetime.com/anapi/data?key=' 
+			+ req.params.user_key 
+			+ '&format=json&by=interval&rk=productivity&rb=' 
+			+ moment().subtract('d', 30).format('YYYY-MM-DD')
+			+ '&re='
+			+ moment().format('YYYY-MM-DD'),
+			json: true}
+			, function(err, response, body){	
+			res.json(body);
+		})
 	})
 app.use('/api', routerAPI);
 
