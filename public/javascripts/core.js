@@ -2,12 +2,19 @@ var pfapp = angular.module('pfapp', ['angularCharts']);
 
 function mainController($scope, $http) {
 	$scope.formData = {};
+	$scope.chartData = {
+		"series": ["daily"],
+		"data": [{
+			"x":"test",
+			"y":[0]
+		}]
+	};
 
 	// when submitting the KEY retrieve data
 	$scope.getData = function(){
 		$http.get('/api/daily/' + $scope.formData.text)
 		.success(function(data) {
-			$scope.rtData = data;
+			$scope.chartData = data;
 			console.log(data);
 		})
 		.error(function(data) {
@@ -16,7 +23,7 @@ function mainController($scope, $http) {
 	};
 
 	$scope.chartConfig = {
-		title : 'My Graph',
+		title : 'Productivity',
 		tooltips: true,
 		labels : false,
 /*		mouseover: function() {},
@@ -27,27 +34,6 @@ function mainController($scope, $http) {
 		    //could be 'left, right'
 		    position: 'left'
 		}
-	};
-
-	$scope.chartData = {
-		series: ['Sales', 'Income', 'Expense', 'Laptops', 'Keyboards'],
-		data : [{
-			x : "Sales",
-			y: [100,500, 0],
-			tooltip:"this is tooltip"
-		},
-		{
-			x : "Not Sales",
-			y: [300, 100, 100]
-		},
-		{
-			x : "Tax",
-			y: [351]
-		},
-		{
-			x : "Not Tax",
-			y: [54, 0, 879]
-		}]     
 	};
 
 	$scope.chartType = 'line';
