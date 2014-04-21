@@ -55,8 +55,13 @@ routerAPI.route('/daily/:user_key')
 			+ '&format=json&by=interval&rk=productivity&re=' 
 			+ moment().format('YYYY-MM-DD'),
 			json: true}
-			, function(err, response, body){	
-			res.json(pfa.trimData(body));
+			, function(err, response, body){
+				if(body.notes == null){
+					console.log(body.error);
+					res.json(body);
+				} else{
+					res.json(pfa.trimData(body));
+				}
 		})	
 	});
 routerAPI.route('/monthly/:user_key')
