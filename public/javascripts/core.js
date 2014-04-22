@@ -1,20 +1,49 @@
-var pfapp = angular.module('pfapp', ['angularCharts']);
+var pfapp = angular.module('pfapp', ['highcharts-ng', 'ngPrettyJson']);
 
 function mainController($scope, $http) {
 	$scope.formData = {};
-	$scope.chartData = {
-		"series": ["daily"],
-		"data": [{
-			"x":"test",
-			"y":[0]
-		}]
+
+	$scope.chartConfig = {
+		loading: true,
 	};
+
+	$scope.chartConfig.options = {
+        tooltip: {
+            style: {
+                padding: 10,
+                fontWeight: 'bold'
+            }
+        },
+   		legend: {
+			enabled: false
+		}
+    };
+
+    $scope.chartConfig.series = [{
+    		name: 'blank',
+            data: []
+        }];
+
+    $scope.chartConfig.title = {
+    	text: 'Percentile Feedback'
+    };
+
+    $scope.chartConfig.loading = false;
+
+    $scope.myJSON = {json: $scope.chartConfig};
 
 	// when submitting the KEY retrieve data
 	$scope.getData = function(){
+
+		//TODO call monthly API
+		//push data to new chartConfig.series
+
+		//TODO push data to new chartConfig.series
 		$http.get('/api/daily/' + $scope.formData.text)
 		.success(function(data) {
-			$scope.chartData = data;
+			$scope.chartConfig.loading = false;
+			$scope.chartConfig.series.pop();
+			$scope.chartConfig.series.push(data);
 			console.log(data);
 		})
 		.error(function(data) {
@@ -22,19 +51,5 @@ function mainController($scope, $http) {
 		});
 	};
 
-	$scope.chartConfig = {
-		title : 'Productivity',
-		tooltips: true,
-		labels : false,
-/*		mouseover: function() {},
-		mouseout: function() {},
-		click: function() {},*/
-		legend: {
-			display: true,
-		    //could be 'left, right'
-		    position: 'left'
-		}
-	};
 
-	$scope.chartType = 'line';
 }
