@@ -2,6 +2,6 @@
 	"name": "percentile-feedback-app",
 	"version": "0.0.1",
 	"dependencies": {
-		"angular-charts": "latest"
+		"highcharts-ng": "latest"
 	}
 }
