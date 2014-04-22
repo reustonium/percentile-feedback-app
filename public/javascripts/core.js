@@ -3,24 +3,25 @@ var pfapp = angular.module('pfapp', ['highcharts-ng', 'ngPrettyJson']);
 function mainController($scope, $http) {
 	$scope.formData = {};
 
-	$scope.chartConfig = {};
+	$scope.chartConfig = {
+		loading: true,
+	};
 
 	$scope.chartConfig.options = {
-        chart: {
-            //type: 'scatter'
-        },
         tooltip: {
             style: {
                 padding: 10,
                 fontWeight: 'bold'
             }
-        }
+        },
+   		legend: {
+			enabled: false
+		}
     };
 
     $scope.chartConfig.series = [{
-            data: [10, 15, 12, 8, 7],
-            color: 'rgba(0, 0, 255, 0.2)',
-            type: 'scatter'
+    		name: 'blank',
+            data: []
         }];
 
     $scope.chartConfig.title = {
@@ -33,9 +34,16 @@ function mainController($scope, $http) {
 
 	// when submitting the KEY retrieve data
 	$scope.getData = function(){
+
+		//TODO call monthly API
+		//push data to new chartConfig.series
+
+		//TODO push data to new chartConfig.series
 		$http.get('/api/daily/' + $scope.formData.text)
 		.success(function(data) {
-			//$scope.chartData = data;
+			$scope.chartConfig.loading = false;
+			$scope.chartConfig.series.pop();
+			$scope.chartConfig.series.push(data);
 			console.log(data);
 		})
 		.error(function(data) {

@@ -1,4 +1,5 @@
 exports.trimData = function(rawData){
+    
 var data = [];
 for(var i=0; i<rawData.rows.length; i++){
     if (rawData.rows[i][3] > 0){
@@ -31,17 +32,16 @@ for(var i=0; i<output.length; i++){
     }
 }
 
-var chartData = {
-    "series":["Daily"],
-    "data": []
+var series = {
+    "data": [],
+    "type": "line"
 }
 
 for(var i=0; i<stuff.length; i++){
-    chartData.data.push({
-        "x": stuff[i][0],
-        "y": [stuff[i][1]]
-    })    
+    series.data.push([
+        stuff[i][0], stuff[i][1]
+        ])    
 }
 
-return chartData;
+return series;
 }
