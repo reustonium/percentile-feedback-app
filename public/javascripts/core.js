@@ -1,46 +1,35 @@
-var pfapp = angular.module('pfapp', ['highcharts-ng']);
+var pfapp = angular.module('pfapp', ['highcharts-ng', 'ngPrettyJson']);
 
 function mainController($scope, $http) {
 	$scope.formData = {};
 
-	$scope.chartConfig = {
-             //This is not a highcharts object. It just looks a little like one!
-             options: {
-                 //This is the Main Highcharts chart config. Any Highchart options are valid here.
-                 //will be ovverriden by values specified below.
-                 chart: {
-                     type: 'bar'
-                 },
-                 tooltip: {
-                     style: {
-                         padding: 10,
-                         fontWeight: 'bold'
-                     }
-                 },
-             },
+	$scope.chartConfig = {};
 
-             //The below properties are watched separately for changes.
+	$scope.chartConfig.options = {
+        chart: {
+            //type: 'scatter'
+        },
+        tooltip: {
+            style: {
+                padding: 10,
+                fontWeight: 'bold'
+            }
+        }
+    };
 
-             //Series object (optional) - a list of series using normal highcharts series options.
-             series: [{
-                 data: [10, 15, 12, 8, 7]
-             }],
-             //Title configuration (optional)
-             title: {
-                 text: 'Hello'
-             },
-             //Boolean to control showng loading status on chart (optional)
-             loading: false,
-             //Configuration for the xAxis (optional). Currently only one x axis can be dynamically controlled.
-             //properties currentMin and currentMax provied 2-way binding to the chart's maximimum and minimum
-             xAxis: {
-              currentMin: 0,
-              currentMax: 20,
-              title: {text: 'values'}
-             },
-             //Whether to use HighStocks instead of HighCharts (optional). Defaults to false.
-             useHighStocks: false
-             }
+    $scope.chartConfig.series = [{
+            data: [10, 15, 12, 8, 7],
+            color: 'rgba(0, 0, 255, 0.2)',
+            type: 'scatter'
+        }];
+
+    $scope.chartConfig.title = {
+    	text: 'Percentile Feedback'
+    };
+
+    $scope.chartConfig.loading = false;
+
+    $scope.myJSON = {json: $scope.chartConfig};
 
 	// when submitting the KEY retrieve data
 	$scope.getData = function(){

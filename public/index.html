@@ -11,7 +11,8 @@
 	<title>Percentile Feedback App</title>
 
 	<!-- SCROLLS -->
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel='stylesheet' href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><!-- load bootstrap -->
+	<link rel='stylesheet' type='text/css' href='./javascripts/ng-prettyjson/dist/ng-prettyjson.min.css'>
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
@@ -24,9 +25,10 @@
 	<!-- SPELLS -->
 	<script type='text/javascript' src='./javascripts/jquery/jquery.min.js'></script> 
 	<script type='text/javascript' src='./javascripts/angular/angular.min.js'></script> 
-	<script src="http://code.highcharts.com/highcharts.js"></script>
+	<script type='text/javascript' src='http://code.highcharts.com/highcharts.js'></script>
 	<script type='text/javascript' src='./javascripts/highcharts-ng/dist/highcharts-ng.min.js'></script>
-	<script type='text/javascript' src="./javascripts/core.js"></script><!-- load core angular functions -->
+	<script type='text/javascript' src='./javascripts/ng-prettyjson/dist/ng-prettyjson.min.js'></script>
+	<script type='text/javascript' src='./javascripts/core.js'></script><!-- load core angular functions -->
 
 </head>
 <!-- SET THE CONTROLLER AND GET ALL TODOS -->
@@ -53,11 +55,13 @@
 				</form>
 			</div>
 		</div>
+		<div class='row'>
 		<div class="charts col-sm-8 col-sm-offset-2">
 			<highchart id="chart1" config="chartConfig"></highchart>
 		</div>
-		<div class="well col-sm-8 col-sm-offset-2 text-center">
-			{{chartConfig.series[0].data}}
+		</div>
+		<div class='row'>
+		<pre json='myJSON' pretty-json class='col-sm-8 col-sm-offset-2'/>
 		</div>
 	</div>
 </body>
