@@ -75,7 +75,7 @@ routerAPI.route('/monthly/:user_key')
 			+ moment().format('YYYY-MM-DD'),
 			json: true}
 			, function(err, response, body){	
-			res.json(body);
+			res.json(pfa.monthlyData(body));
 		})
 	})
 app.use('/api', routerAPI);

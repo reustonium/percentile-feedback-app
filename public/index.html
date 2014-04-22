@@ -16,10 +16,7 @@
 	<style>
 		html 					{ overflow-y:scroll; }
 		body 					{ padding-top:50px; }
-		#chart {
-		  	height: 400px;
-		  	width: 800px;
-		}
+		.top-buffer { margin-top:20px; }
 	</style>
 
 	<!-- SPELLS -->
@@ -55,12 +52,12 @@
 				</form>
 			</div>
 		</div>
-		<div class='row'>
+		<div class='row top-buffer'>
 		<div class="charts col-sm-8 col-sm-offset-2">
 			<highchart id="chart1" config="chartConfig"></highchart>
 		</div>
 		</div>
-		<div class='row'>
+		<div class='row top-buffer'>
 		<pre json='myJSON' pretty-json class='col-sm-8 col-sm-offset-2'/>
 		</div>
 	</div>
