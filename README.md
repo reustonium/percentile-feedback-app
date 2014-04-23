@@ -16,6 +16,10 @@ Percentile Feedback App is a 100% javascript web application which plots and rep
  ```
  npm install
  ```
+ 
+ ```
+ bower install
+ ```
 
 ### Running the project locally
 1. Host the app on [localhost:8080](http://localhost:8080)
