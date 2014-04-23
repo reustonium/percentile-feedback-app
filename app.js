@@ -47,24 +47,8 @@ routerAPI.route('/users')
 			res.json(users)
 		})
 	});
-routerAPI.route('/daily/:user_key')
-	.get(function(req, res){
-		request({
-			url: 'https://www.rescuetime.com/anapi/data?key=' 
-			+ req.params.user_key 
-			+ '&format=json&by=interval&rk=productivity&re=' 
-			+ moment().format('YYYY-MM-DD'),
-			json: true}
-			, function(err, response, body){
-				if(body.notes == null){
-					console.log(body.error);
-					res.json(body);
-				} else{
-					res.json(pfa.trimData(body));
-				}
-		})	
-	});
-routerAPI.route('/monthly/:user_key')
+
+routerAPI.route('/fetchData/:user_key')
 	.get(function(req, res){
 		request({
 			url: 'https://www.rescuetime.com/anapi/data?key=' 
@@ -75,9 +59,9 @@ routerAPI.route('/monthly/:user_key')
 			+ moment().format('YYYY-MM-DD'),
 			json: true}
 			, function(err, response, body){	
-			res.json(pfa.monthlyData(body));
+				res.json(pfa.parseData(body, moment().format('YYYY-MM-DD')));
 		})
-	})
+	});
 app.use('/api', routerAPI);
 
 var router = express.Router();

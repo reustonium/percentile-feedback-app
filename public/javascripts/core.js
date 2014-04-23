@@ -7,6 +7,7 @@ function mainController($scope, $http) {
 		loading: true,
 	};
 
+	//TODO move this to a config JSON
 	$scope.chartConfig.options = {
 		colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
 			"#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
@@ -46,7 +47,8 @@ function mainController($scope, $http) {
 					color: '#A0A0A3'
 
 				}
-			}
+			},
+			tickInterval: 1
 		},
 		yAxis: {
 			gridLineColor: '#707073',
@@ -63,7 +65,11 @@ function mainController($scope, $http) {
 				style: {
 					color: '#A0A0A3'
 				}
-			}
+			},
+			min: 0
+		},
+		legend: {
+			enabled: false
 		},
 		tooltip: {
 			backgroundColor: 'rgba(0, 0, 0, 0.85)',
@@ -83,7 +89,7 @@ function mainController($scope, $http) {
             data: []
         }];
 
-    $scope.chartConfig.loading = false;
+    $scope.chartConfig.loading = true;
 
     $scope.myJSON = {json: $scope.chartConfig};
 
@@ -91,20 +97,24 @@ function mainController($scope, $http) {
 	$scope.getData = function(){
 		$scope.chartConfig.series = [];
 
-		$http.get('/api/monthly/' + $scope.formData.text)
-		.success(function(data){
-			$scope.chartConfig.series.push(data);
-		})
-		.error(function(data){
-			console.log('Error: ' + data);
-		})
-
-		$http.get('/api/daily/' + $scope.formData.text)
+		$http.get('/api/fetchData/' + $scope.formData.text)
 		.success(function(data) {
 			$scope.chartConfig.loading = false;
-			$scope.chartConfig.series.pop();
-			$scope.chartConfig.series.push(data);
-			console.log(data);
+			$scope.chartConfig.series.push({
+				"data": data.daily,
+				"type": 'line',
+				"marker":{
+					enabled: false
+				}
+			});
+			$scope.chartConfig.series.push({
+			    "data": data.monthly,
+			    "type": "scatter",
+			    "color": 'rgba(119, 152, 191, 0.2)',
+			    "marker": {
+			        symbol: 'circle'
+    			}
+			})
 		})
 		.error(function(data) {
 			console.log('Error: ' + data);

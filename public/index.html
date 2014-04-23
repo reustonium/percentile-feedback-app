@@ -33,7 +33,7 @@
 	<div class="container">
 
 		<!-- HEADER AND TODO COUNT -->
-		<div class="jumbotron text-center">
+		<div class="page-header text-center">
 			<h1>Percentile Feedback App</h1>
 		</div>
 
@@ -41,14 +41,14 @@
 		<div id="userkey-form" class="row">
 			<div class="col-sm-8 col-sm-offset-2 text-center">
 				<form>
-					<div class="form-group">
+					<div class="input-group">
 
 						<!-- BIND THIS VALUE TO formData.text IN ANGULAR -->
 						<input type="text" class="form-control input-lg text-center" placeholder="RescueTime API Key" ng-model="formData.text">
+						<span class="input-group-btn">
+							<button type="submit" class="btn btn-primary btn-lg" ng-click="getData()">Submit</button>
+						</span>
 					</div>
-
-					<!-- createToDo() WILL CREATE NEW TODOS -->
-					<button type="submit" class="btn btn-primary btn-lg" ng-click="getData()">Submit</button>
 				</form>
 			</div>
 		</div>
