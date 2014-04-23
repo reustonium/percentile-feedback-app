@@ -101,20 +101,21 @@ function mainController($scope, $http) {
 		.success(function(data) {
 			$scope.chartConfig.loading = false;
 			$scope.chartConfig.series.push({
+			    "data": data.monthly,
+			    "type": "scatter",
+			    "color": 'rgba(119, 152, 191, 0.4)',
+			    "marker": {
+			        symbol: 'circle'
+    			}
+			});
+			$scope.chartConfig.series.push({
 				"data": data.daily,
 				"type": 'line',
+				"color": 'rgba(144,238,126,1)',
 				"marker":{
 					enabled: false
 				}
 			});
-			$scope.chartConfig.series.push({
-			    "data": data.monthly,
-			    "type": "scatter",
-			    "color": 'rgba(119, 152, 191, 0.2)',
-			    "marker": {
-			        symbol: 'circle'
-    			}
-			})
 		})
 		.error(function(data) {
 			console.log('Error: ' + data);

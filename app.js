@@ -54,7 +54,7 @@ routerAPI.route('/fetchData/:user_key')
 			url: 'https://www.rescuetime.com/anapi/data?key=' 
 			+ req.params.user_key 
 			+ '&format=json&by=interval&rk=productivity&rb=' 
-			+ moment().subtract('d', 30).format('YYYY-MM-DD')
+			+ moment().subtract('d', 360).format('YYYY-MM-DD')
 			+ '&re='
 			+ moment().format('YYYY-MM-DD'),
 			json: true}
