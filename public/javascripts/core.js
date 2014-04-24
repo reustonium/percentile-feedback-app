@@ -97,6 +97,7 @@ function mainController($scope, $http) {
 	$scope.getData = function(){
 		$scope.chartConfig.series = [];
 
+
 		$http.get('/api/fetchData/' + $scope.formData.text)
 		.success(function(data) {
 			$scope.chartConfig.loading = false;
@@ -105,17 +106,19 @@ function mainController($scope, $http) {
 			    "type": "scatter",
 			    "color": 'rgba(119, 152, 191, 0.4)',
 			    "marker": {
-			        symbol: 'circle'
+			        symbol: 'circle',
+			        radius: 6
     			}
 			});
 			$scope.chartConfig.series.push({
 				"data": data.daily,
-				"type": 'line',
+				"type": 'spline',
 				"color": 'rgba(144,238,126,1)',
 				"marker":{
 					enabled: false
 				}
 			});
+			$scope.dateJSON = {json: data.date}
 		})
 		.error(function(data) {
 			console.log('Error: ' + data);
