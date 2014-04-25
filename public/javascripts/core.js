@@ -121,7 +121,7 @@ function mainController($scope, $http) {
 				"type": "pie",
 				"center": ["15%","15%"],
 				"size": 120,
-				"color": ['rgba(255,0,0,1)','rgba(0,255,0,1)']
+				"colors": ['rgba(144,238,126,1)','rgba(0,255,0,0)']
 			});
 			$scope.dateJSON = {json: data.date};
 			$scope.pfa = {json: data.pfa};
