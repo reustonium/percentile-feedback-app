@@ -9,8 +9,6 @@ function mainController($scope, $http) {
 
 	//TODO move this to a config JSON
 	$scope.chartConfig.options = {
-		colors: ["#2b908f", "#90ee7e", "#f45b5b", "#7798BF", "#aaeeee", "#ff0066", "#eeaaee",
-			"#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
 		chart: {
 			backgroundColor: {
 				linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
@@ -98,7 +96,7 @@ function mainController($scope, $http) {
 		$scope.chartConfig.series = [];
 
 
-		$http.get('/api/fetchData/' + $scope.formData.text)
+		$http.get('/api/fetchData/' + $scope.formData.text + "/" + moment().format("YYYY-MM-DD"))
 		.success(function(data) {
 			$scope.chartConfig.loading = false;
 			$scope.chartConfig.series.push({
@@ -118,7 +116,15 @@ function mainController($scope, $http) {
 					enabled: false
 				}
 			});
-			$scope.dateJSON = {json: data.date}
+			$scope.chartConfig.series.push({
+				"data": data.pfa,
+				"type": "pie",
+				"center": ["15%","15%"],
+				"size": 120,
+				"color": ['rgba(255,0,0,1)','rgba(0,255,0,1)']
+			});
+			$scope.dateJSON = {json: data.date};
+			$scope.pfa = {json: data.pfa};
 		})
 		.error(function(data) {
 			console.log('Error: ' + data);

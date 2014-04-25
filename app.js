@@ -48,15 +48,15 @@ routerAPI.route('/users')
 		})
 	});
 
-routerAPI.route('/fetchData/:user_key')
+routerAPI.route('/fetchData/:user_key/:today')
 	.get(function(req, res){
 		request({
 			url: 'https://www.rescuetime.com/anapi/data?key=' 
 			+ req.params.user_key 
 			+ '&format=json&by=interval&rk=productivity&rb=' 
-			+ moment().subtract('d', 30).format('YYYY-MM-DD')
+			+ moment(req.params.today, "YYYY-MM-DD").subtract('d', 30).format('YYYY-MM-DD')
 			+ '&re='
-			+ moment().format('YYYY-MM-DD'),
+			+ req.params.today,
 			json: true}
 			, function(err, response, body){	
 				res.json(pfa.parseData(body, moment().format('YYYY-MM-DD')));
