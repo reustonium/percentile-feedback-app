@@ -31,7 +31,9 @@ for(var i=0; i<data.length; i++){
         var sameDate = (data[i][0] === data[i-1][0]);
         var sameHour = (data[i][1] === data[i-1][1]);
         var isToday = (todayDate === data[i][0]);
-  
+        if(!isToday){
+            var lastEntry = (data[i][1]<24 && data[i][0] != data[i+1][0]);
+        }
         if(!sameDate){prod=data[i][2];}      
         //if date and hour are the same, add prod, replace previous entry
         if(sameDate && !isToday){
@@ -40,11 +42,10 @@ for(var i=0; i<data.length; i++){
             month.push([data[i][1], prod]);
             hist[data[i][1]].push(prod);
             //if it's the last entry of the day, fill the rest of the day
-            if(data[i][1] != 24){
+            if(lastEntry){
                 for(var j = (data[i][1]+1); j<24; j++){
-                    console.log(j);
                     month.push([j, prod]);
-                    //hist[j].push(prod);
+                    hist[j].push(prod);
                 }
             }
         }
@@ -65,17 +66,19 @@ hour.forEach(function(val, index, array){
         greaterThan++;
    }
 });
+
 var pfaColor;
-var pfa = Math.round(greaterThan/hour.length*100)/100;
-if(pfa <  0.25){pfaColor = 'rgba(255,0,0,1)';}
-if(pfa >= 0.25 && pfa <= 0.75){pfaColor = 'rgba(125,125,0,1)';}
-if(pfa > 0.75){pfaColor = 'rgba(144,238,126,1)';}
+var pfa = Math.round(greaterThan/hour.length*100);
+if(pfa <  25){pfaColor = 'rgba(255,0,0,1)';}
+if(pfa >= 25 && pfa <= 75){pfaColor = 'rgba(125,125,0,1)';}
+if(pfa > 75){pfaColor = 'rgba(144,238,126,1)';}
 
     myData = {
         daily: today,
         monthly: month,
         date: todayDate,
-        pfa: [pfa, 1-pfa],
+        hist: hist,
+        pfa: [pfa, 100-pfa],
         pfaColor: pfaColor
     };
 

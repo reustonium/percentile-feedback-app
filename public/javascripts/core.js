@@ -102,10 +102,10 @@ function mainController($scope, $http) {
 			$scope.chartConfig.series.push({
 			    "data": data.monthly,
 			    "type": "scatter",
-			    "color": 'rgba(119, 152, 191, 0.4)',
+			    "color": 'rgba(119, 152, 191, 0.3)',
 			    "marker": {
 			        symbol: 'circle',
-			        radius: 6
+			        radius: 4
     			}
 			});
 			$scope.chartConfig.series.push({
@@ -136,6 +136,7 @@ function mainController($scope, $http) {
 			});
 			$scope.dateJSON = {json: data.date};
 			$scope.pfa = {json: data.pfa};
+			$scope.hist = {json: data.hist};
 		})
 		.error(function(data) {
 			console.log('Error: ' + data);
