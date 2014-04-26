@@ -59,7 +59,12 @@ routerAPI.route('/fetchData/:user_key/:today')
 			+ req.params.today,
 			json: true}
 			, function(err, response, body){	
-				res.json(pfa.parseData(body, moment().format('YYYY-MM-DD')));
+				if(body.error != null){
+					console.log("error: " + body);
+					res.json(body);
+				} else {
+					res.json(pfa.parseData(body, moment().format('YYYY-MM-DD')));
+				}
 		})
 	});
 app.use('/api', routerAPI);

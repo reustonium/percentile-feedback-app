@@ -66,6 +66,15 @@ function mainController($scope, $http) {
 			},
 			min: 0
 		},
+		labels: {
+			items: [{
+	            html: '<b>example text</b>',
+	            style: {
+	                top: '100px',
+	                left: '100px'
+	            }
+	        }]
+		},
 		legend: {
 			enabled: false
 		},
@@ -105,7 +114,7 @@ function mainController($scope, $http) {
 			    "color": 'rgba(119, 152, 191, 0.3)',
 			    "marker": {
 			        symbol: 'circle',
-			        radius: 4
+			        radius: 6
     			}
 			});
 			$scope.chartConfig.series.push({
@@ -117,13 +126,10 @@ function mainController($scope, $http) {
 				}
 			});
 			$scope.chartConfig.series.push({
-				"title":{
-					text: data.pfa
-				},
 				"data": data.pfa,
 				"type": "pie",
-				"center": ["15%","15%"],
-				"size": 120,
+				"center": ["15%","25%"],
+				"size": 150,
 				"borderColor": 'rgba(0,0,0,0)',
 				"enableMouseTracking": false,
 				"endAngle": 90,
