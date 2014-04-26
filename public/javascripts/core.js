@@ -117,11 +117,22 @@ function mainController($scope, $http) {
 				}
 			});
 			$scope.chartConfig.series.push({
+				"title":{
+					text: data.pfa
+				},
 				"data": data.pfa,
 				"type": "pie",
 				"center": ["15%","15%"],
 				"size": 120,
-				"colors": ['rgba(144,238,126,1)','rgba(0,255,0,0)']
+				"borderColor": 'rgba(0,0,0,0)',
+				"enableMouseTracking": false,
+				"endAngle": 90,
+				"innerSize": "20%",
+				"startAngle": -90,
+				"dataLabels":{
+					enabled: false
+				},
+				"colors": [data.pfaColor,'rgba(0,255,0,0)']
 			});
 			$scope.dateJSON = {json: data.date};
 			$scope.pfa = {json: data.pfa};
