@@ -66,15 +66,6 @@ function mainController($scope, $http) {
 			},
 			min: 0
 		},
-		labels: {
-			items: [{
-	            html: '<b>example text</b>',
-	            style: {
-	                top: '100px',
-	                left: '100px'
-	            }
-	        }]
-		},
 		legend: {
 			enabled: false
 		},
@@ -126,17 +117,39 @@ function mainController($scope, $http) {
 				}
 			});
 			$scope.chartConfig.series.push({
-				"data": data.pfa,
+				"data": [{
+						y: data.pfa[0],
+						name: "pfa"
+					},{
+						y: data.pfa[1],
+						name: "bad"
+					}
+
+				],
 				"type": "pie",
 				"center": ["15%","25%"],
 				"size": 150,
 				"borderColor": 'rgba(0,0,0,0)',
 				"enableMouseTracking": false,
 				"endAngle": 90,
-				"innerSize": "20%",
+				"innerSize": "25%",
 				"startAngle": -90,
 				"dataLabels":{
-					enabled: false
+					connectorWidth: 0,
+					formatter: function(){
+						var label = '';
+						if(this.point.name === "pfa"){
+							label = this.y + "%";
+						}
+						return label;
+					},
+					style: {
+						fontWeight: 'bold',
+						fontSize: 60,
+						color: data.pfaColor
+					},
+					y: 110,
+					x: 85
 				},
 				"colors": [data.pfaColor,'rgba(0,255,0,0)']
 			});
