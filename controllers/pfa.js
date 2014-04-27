@@ -21,7 +21,7 @@ var hist = {
 };
 
 for(var i=0; i<data.length; i++){
-    
+    var gap = 0;
     //add first value
     if(i===0){
         prod = data[i][2];
@@ -33,6 +33,9 @@ for(var i=0; i<data.length; i++){
         var isToday = (todayDate === data[i][0]);
         if(!isToday){
             var lastEntry = (data[i][1]<24 && data[i][0] != data[i+1][0]);
+            if(!lastEntry){
+                gap = data[i+1][1] - data[i][1];
+            }
         }
         if(!sameDate){prod=data[i][2];}      
         //if date and hour are the same, add prod, replace previous entry
@@ -41,11 +44,17 @@ for(var i=0; i<data.length; i++){
             prod += data[i][2];
             month.push([data[i][1], prod]);
             hist[data[i][1]].push(prod);
-            //if it's the last entry of the day, fill the rest of the day
+            //check to see if there is a blank or if its the last entry for the day
             if(lastEntry){
                 for(var j = (data[i][1]+1); j<24; j++){
                     month.push([j, prod]);
                     hist[j].push(prod);
+                }
+            }
+            if(gap > 1){
+                for(var g = 1; g < gap; g++ ){
+                    month.push([(data[i][1]+g), prod]);
+                    hist[(data[i][1]+g)].push(prod);
                 }
             }
         }
