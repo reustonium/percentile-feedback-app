@@ -12,7 +12,6 @@ var smtpTransport = nodemailer.createTransport('SMTP', {
  * GET /contact
  * Contact form page.
  */
-
 exports.getContact = function(req, res) {
   res.render('contact', {
     title: 'Contact'
@@ -26,7 +25,6 @@ exports.getContact = function(req, res) {
  * @param name
  * @param message
  */
-
 exports.postContact = function(req, res) {
   req.assert('name', 'Name cannot be blank').notEmpty();
   req.assert('email', 'Email is not valid').isEmail();
@@ -42,8 +40,8 @@ exports.postContact = function(req, res) {
   var from = req.body.email;
   var name = req.body.name;
   var body = req.body.message;
-  var to = 'your@email.com';
-  var subject = 'Contact Form | Hackathon Starter';
+  var to = 'andrew.ruestow@gmail.com';
+  var subject = 'Contact Form | quantifyToday';
 
   var mailOptions = {
     to: to,

@@ -15,6 +15,7 @@ block content
       .col-sm-4
         input.form-control(type='text', name='name', id='name', value='#{user.profile.name}')
     .form-group
+      //TODO: remove gender stuff
       label.col-sm-2.control-label(for='gender') Gender
       .col-sm-4
         label.radio
@@ -23,6 +24,7 @@ block content
         label.radio
           input(type='radio', checked=user.profile.gender=='female', name='gender', value='female', data-toggle='radio')
           span Female
+      //TODO: add form-group for entering RescueTime API Key
     .form-group
       label.col-sm-2.control-label(for='location') Location
       .col-sm-4
