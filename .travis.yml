@@ -1,6 +1,9 @@
 language: node_js
 node_js:
 - 0.1
+branches:
+  only:
+    - master
 deploy:
   provider: heroku
   api_key:
