@@ -4,6 +4,13 @@
 @import (less) "lib/font-awesome.min.css";
 @import (less) "lib/bootstrap-social.css";
 
+// Colors
+// -------------------------
+@blue: #7798bf;
+@green: #90ee7e;
+@dgrey: #2a2a2b;
+@lgrey: #3e3e40;
+
 // Scaffolding
 // -------------------------
 
@@ -13,6 +20,7 @@ html, body {
 
 body {
   padding-top: 70px;
+  //background-color: @dgrey;
 }
 
 #wrap {
@@ -20,24 +28,24 @@ body {
   height: auto !important;
   height: 100%;
   /* Negative indent footer by its height */
-  margin: 0 auto -110px;
+  margin: 0 auto -80px;
   /* Pad bottom by footer height + (optional) extra spacing */
-  padding: 0 0 140px;
+  padding: 0 0 110px;
 }
 
 #footer {
-  height: 110px;
+  height: 80px;
   padding-top: 15px;
 }
 
 // Navbar
 // -------------------------
 
-@navbar-height: 45px;
+@navbar-height: 60px;
 
 .navbar-nav .profile-image {
   width: 30px;
-  height: 30px;
+  height: 60px;
   margin: -15px 15px -15px 0;
 }
 
@@ -48,7 +56,7 @@ body {
   background-position: left center;
   padding-left: 50px;
   margin-left: 15px;
-  height: 45px;
+  height: 60px;
 }
 
 // Social Buttons
