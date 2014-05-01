@@ -13,12 +13,8 @@ var userSchema = new mongoose.Schema({
 
   profile: {
     name: { type: String, default: '' },
-    //TODO: remove Gender stuff
-    gender: { type: String, default: '' },
-    location: { type: String, default: '' },
-    website: { type: String, default: '' },
+    rescueTimeKey: {type: String, default:''},
     picture: { type: String, default: '' }
-    //TODO: add rescuetime API Key
   },
 
   resetPasswordToken: String,
@@ -28,6 +24,7 @@ var userSchema = new mongoose.Schema({
 /**
  * Hash the password for security.
  * "Pre" is a Mongoose middleware that executes before each user.save() call.
+ * TODO: Hash rescueTime API Key
  */
 userSchema.pre('save', function(next) {
   var user = this;
@@ -62,7 +59,7 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
  */
 userSchema.methods.gravatar = function(size, defaults) {
   if (!size) size = 200;
-  if (!defaults) defaults = 'retro';
+  if (!defaults) defaults = 'mm';
 
   if (!this.email) {
     return 'https://gravatar.com/avatar/?s=' + size + '&d=' + defaults;

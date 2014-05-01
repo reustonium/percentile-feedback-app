@@ -5,6 +5,7 @@ var nodemailer = require('nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
 var secrets = require('../config/secrets');
+var rt = require('./rescue-time');
 
 /**
  * GET /login
@@ -125,15 +126,18 @@ exports.postUpdateProfile = function(req, res, next) {
     if (err) return next(err);
     user.email = req.body.email || '';
     user.profile.name = req.body.name || '';
-    user.profile.gender = req.body.gender || '';
-    user.profile.location = req.body.location || '';
-    user.profile.website = req.body.website || '';
-
-    user.save(function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'Profile information updated.' });
+    if(!rt.validKey(req.body.rescueTimeKey)){
+      req.flash('errors', {msg: 'Please provide a valid RescueTime Key'});
       res.redirect('/account');
-    });
+    } else {
+      user.profile.rescueTimeKey = req.body.rescueTimeKey;
+      
+      user.save(function(err) {
+        if (err) return next(err);
+        req.flash('success', { msg: 'Profile information updated.' });
+        res.redirect('/account');
+      });
+    }
   });
 };
 
@@ -272,8 +276,8 @@ exports.postReset = function(req, res, next) {
       });
       var mailOptions = {
         to: user.email,
-        from: 'hackathon@starter.com',
-        subject: 'Your Hackathon Starter password has been changed',
+        from: 'andrew.ruestow@gmail.com',
+        subject: 'Your quantifyToday password has been changed',
         text: 'Hello,\n\n' +
           'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
       };
@@ -348,8 +352,8 @@ exports.postForgot = function(req, res, next) {
       });
       var mailOptions = {
         to: user.email,
-        from: 'hackathon@starter.com',
-        subject: 'Reset your password on Hackathon Starter',
+        from: 'andrew.ruestow@gmail.com',
+        subject: 'Reset your password on quantifyToday',
         text: 'You are receiving this email because you (or someone else) have requested the reset of the password for your account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
           'http://' + req.headers.host + '/reset/' + token + '\n\n' +

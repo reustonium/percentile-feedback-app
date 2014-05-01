@@ -41,9 +41,6 @@ var app = express();
 /**
  * Mongoose configuration.
  */
-// TODO: move to secrets.db
-//var port = process.env.PORT || 8080;
-//var mongoURI = process.env.MONGOLAB_URI || 'mongodb://localhost/pfa';
 mongoose.connect(secrets.db);
 mongoose.connection.on('error', function() {
   console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');

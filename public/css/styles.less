@@ -50,6 +50,14 @@ body {
   margin: -15px 15px -15px 0;
 }
 
+.navbar-nav {
+  > .active > a{
+  text-decoration: underline;
+  }
+  >li >a{
+    font-size: @font-size-base *1.25;
+  }
+}
 .navbar-brand {
   background-image: url(../img/npm-logo.png);
   background-repeat: no-repeat;
@@ -58,6 +66,7 @@ body {
   padding-left: 50px;
   margin-left: 15px;
   height: @navbar-height;
+  font-size: @font-size-base * 2;
 }
 
 // Social Buttons
@@ -65,6 +74,8 @@ body {
 
 .btn-social {
   border-radius: 2px;
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 // Font Awesome
