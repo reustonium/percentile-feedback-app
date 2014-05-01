@@ -1,5 +1,6 @@
 @import "lib/bootstrap/bootstrap";
-@import "themes/default";
+//@import "themes/default";
+@import "themes/slate";
 @import (less) "lib/animate.css";
 @import (less) "lib/font-awesome.min.css";
 @import (less) "lib/bootstrap-social.css";
@@ -44,7 +45,7 @@ body {
 @navbar-height: 60px;
 
 .navbar-nav .profile-image {
-  width: 30px;
+  //width: 30px;
   height: 60px;
   margin: -15px 15px -15px 0;
 }
@@ -56,7 +57,7 @@ body {
   background-position: left center;
   padding-left: 50px;
   margin-left: 15px;
-  height: 60px;
+  height: @navbar-height;
 }
 
 // Social Buttons
