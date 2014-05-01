@@ -28,4 +28,3 @@ Percentile Feedback App is a 100% javascript web application which plots and rep
  
 ### Deploy your own instance to Heroku
 TODO
- 
