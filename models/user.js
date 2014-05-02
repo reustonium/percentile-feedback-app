@@ -14,6 +14,7 @@ var userSchema = new mongoose.Schema({
   profile: {
     name: { type: String, default: '' },
     rescueTimeKey: {type: String, default:''},
+    validRTKey: {type: Boolean, default: 'false'},
     picture: { type: String, default: '' }
   },
 

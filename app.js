@@ -24,8 +24,9 @@ var connectAssets = require('connect-assets');
  */
 var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
-var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
+var gettingStartedController = require('./controllers/gettingStarted');
+var rescuetime = require('./controllers/rescue-time');
 
 /**
  * API keys + Passport configuration.
@@ -135,6 +136,7 @@ routerAPI.route('/fetchData/:user_key/:today')
  * Application routes.
  */
 app.get('/', homeController.index);
+app.get('/gettingStarted', gettingStartedController.index);
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
@@ -151,24 +153,26 @@ app.post('/account/profile', passportConf.isAuthenticated, userController.postUp
 app.post('/account/password', passportConf.isAuthenticated, userController.postUpdatePassword);
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 app.get('/account/unlink/:provider', passportConf.isAuthenticated, userController.getOauthUnlink);
-app.get('/api', apiController.getApi);
-app.get('/api/facebook', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.getFacebook);
-app.get('/api/twitter', passportConf.isAuthenticated, passportConf.isAuthorized, apiController.getTwitter);
+
+/**
+ * API routes.
+ */
+app.get('/api/getToday', rescuetime.getToday);
 
 /**
  * OAuth routes for sign-in.
  */
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'user_location'] }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login' }), function(req, res) {
-  res.redirect(req.session.returnTo || '/');
+  res.redirect('/');
 });
 app.get('/auth/google', passport.authenticate('google', { scope: 'profile email' }));
 app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/login' }), function(req, res) {
-  res.redirect(req.session.returnTo || '/');
+  res.redirect('/');
 });
 app.get('/auth/twitter', passport.authenticate('twitter'));
 app.get('/auth/twitter/callback', passport.authenticate('twitter', { failureRedirect: '/login' }), function(req, res) {
-  res.redirect(req.session.returnTo || '/');
+  res.redirect('/');
 });
 
 
