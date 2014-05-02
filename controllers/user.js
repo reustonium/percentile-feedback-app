@@ -5,7 +5,7 @@ var nodemailer = require('nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
 var secrets = require('../config/secrets');
-var rt = require('./rescue-time');
+var rescueTime = require('./rescue-time');
 
 /**
  * GET /login
@@ -126,14 +126,19 @@ exports.postUpdateProfile = function(req, res, next) {
     if (err) return next(err);
     user.email = req.body.email || '';
     user.profile.name = req.body.name || '';
-    //check req.body.rescueTimeKey by making http request,
-    //and parsing response to ensure the key is good
     user.profile.rescueTimeKey = req.body.rescueTimeKey;
-    
-    user.save(function(err) {
-      if (err) return next(err);
-      req.flash('success', { msg: 'Profile information updated.' });
-      res.redirect('/account');
+    rescueTime.validKey(req.body.rescueTimeKey, function(valid){
+      if(!valid){
+        req.flash('errors', {msg: 'Invalid RescueTime Key'});
+        res.redirect('/account');
+      } 
+      else {
+        user.save(function(err) {
+          if (err) return next(err);
+          req.flash('success', { msg: 'Profile information updated.' });
+          res.redirect('/account');
+        });
+      }
     });
   });
 };
