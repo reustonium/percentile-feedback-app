@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    console.log(#data);
 
     $('#myChart').highcharts({
         chart: {
