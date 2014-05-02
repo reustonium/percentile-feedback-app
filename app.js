@@ -109,24 +109,6 @@ routerAPI.use(function(req, res, next){
 	console.log('api request made');
 	next();
 });
-routerAPI.route('/users')
-	.post(function(req, res){
-		var user = new User();
-		user.username = req.body.name;
-		user.key = req.body.key;
-		user.save(function(err){
-			if(err)
-				res.send(err);
-			res.json({message: 'user created'});
-		});
-	})
-	.get(function(req, res){
-		User.find(function(err, users){
-			if(err)
-				res.send(err);
-			res.json(users);
-		});
-	});
 
 routerAPI.route('/fetchData/:user_key/:today')
 	.get(function(req, res){

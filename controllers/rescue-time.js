@@ -1,19 +1,15 @@
 var request = require('request');
+exports.validKey = function(key){
+	var options = {
+		url: 'https://www.rescuetime.com/anapi/data?key=' + key,
+		json: true
+	};
 
-var options = {
-	url: 'https://www.rescuetime.com/anapi/data?key=' + key,
-	json: true
-};
-
-var cb = function callback(error, response, body){	
-	if(error){
-		console.log('err: ' + error);
-	}
-	if(body.error){
-		console.log('bodyerror: ' + body);
-	}
-	console.log('body: ' + body.notes);
-	return true;
-};
-request(options, cb);
-exports.validKey = cb;
+	var cb = function callback(error, response, body){	
+		if(error || body.error){
+			//Key is bad, flash message and don't allow save
+		}
+		//key is good, save profile
+	};
+	request(options, cb);
+}
