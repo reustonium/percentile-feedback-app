@@ -1,6 +1,4 @@
-# percentile-feedback-app
-
-[![Build Status](https://travis-ci.org/reustonium/percentile-feedback-app.svg?branch=master)](https://travis-ci.org/reustonium/percentile-feedback-app)
+# percentile-feedback-app [![Build Status](https://travis-ci.org/reustonium/percentile-feedback-app.svg?branch=master)](https://travis-ci.org/reustonium/percentile-feedback-app)
 
 Percentile Feedback App is a 100% javascript web application which plots and reports your daily productivity utilizing the percentile feedback method using data from [RescueTime](http://rescuetime.com).  This webapp is inspired by the work done by [Nick Winter](https://twitter.com/nwinter)
 
@@ -32,4 +30,3 @@ The webapp is heavily influenced by [Sahat Yalkabov's](https://github.com/sahat)
  
 ### Deploy your own instance to Heroku
 TODO
- 
