@@ -2,7 +2,6 @@ $(document).ready(function() {
 
     var chart;
     var requestToday = function(){
-
         $.ajax({
             url: '/api/getToday/',
             success: function(data){
@@ -16,6 +15,7 @@ $(document).ready(function() {
     chart = new Highcharts.Chart({
         chart: {
             renderTo: 'myChart',
+            height: 500,
             backgroundColor: '#272B30',
             plotBorderColor: '#606063',
             style: {
@@ -23,7 +23,8 @@ $(document).ready(function() {
             },
             events: {
                 load: function(){
-                    setInterval(requestToday, 10000);
+                    requestToday();
+                    setInterval(requestToday, 1000*60*5);
                 }
             }
         },
@@ -87,7 +88,22 @@ $(document).ready(function() {
         maskColor: 'rgba(255,255,255,0.3)',
         series: [{
             name: 'today',
-            data: []
+            data: [],
+            type: 'spline',
+            color: 'rgba(144,238,126,1)',
+            marker: {
+                enabled: false
+            }
+        },
+        {
+            name: 'hist',
+            data: [],
+            type: 'scatter',
+            color: 'rgba(119, 152, 191, 0.3)',
+            marker: {
+                symbol: 'circle',
+                radius: 6
+            }
         }],
         credits: {
             enabled: false
