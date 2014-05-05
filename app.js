@@ -29,20 +29,31 @@ var gettingStartedController = require('./controllers/gettingStarted');
 var rescuetime = require('./controllers/rescue-time');
 
 /**
- * API keys + Passport configuration.
- */
-var secrets = require('./config/secrets');
-var passportConf = require('./config/passport');
-
-/**
  * Create Express server.
  */
 var app = express();
 
 /**
+ * API keys + Passport configuration.
+ */
+var passportConf = require('./config/passport');
+
+//TODO: find better deployment for secrets.js
+var db;
+var sessionSecret;
+if(app.get('env')==='development'){
+  var secrets = require('./config/secrets');
+  db = secrets.db;
+  sessionSecret = secrets.sessionSecret;
+} else {
+  db = process.env.MONGODB;
+  sessionSecret = process.env.SESSION_SECRET;
+}
+
+/**
  * Mongoose configuration.
  */
-mongoose.connect(secrets.db);
+mongoose.connect(db);
 mongoose.connection.on('error', function() {
   console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');
 });
@@ -72,9 +83,9 @@ app.use(expressValidator());
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(session({
-  secret: secrets.sessionSecret,
+  secret: sessionSecret,
   store: new MongoStore({
-    url: secrets.db,
+    url: db,
     auto_reconnect: true
   })
 }));
@@ -82,7 +93,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req, res, next) {
   // Conditional CSRF.
-  if (_.contains(csrfWhitelist, req.path)) return next();
+  if (_.contains(csrfWhitelist, req.path)) {
+    return next();
+  }
   csrf(req, res, next);
 });
 app.use(function(req, res, next) {
@@ -94,9 +107,13 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: week }));
 app.use(function(req, res, next) {
   // Keep track of previous URL to redirect back to
   // original destination after a successful login.
-  if (req.method !== 'GET') return next();
+  if (req.method !== 'GET') {
+    return next();
+  }
   var path = req.path.split('/')[1];
-  if (/(auth|login|logout|signup)$/i.test(path)) return next();
+  if (/(auth|login|logout|signup)$/i.test(path)) {
+    return next();
+  }
   req.session.returnTo = req.path;
   next();
 });

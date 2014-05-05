@@ -19,7 +19,7 @@ $(document).ready(function() {
             backgroundColor: '#272B30',
             plotBorderColor: '#606063',
             style: {
-                fontFamily: "'Unica One', sans-serif"
+                fontFamily: '"Unica One", sans-serif'
             },
             events: {
                 load: function(){

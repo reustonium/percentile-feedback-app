@@ -4,8 +4,19 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
 var User = require('../models/User');
-var secrets = require('../config/secrets');
 var rescueTime = require('./rescue-time');
+
+//TODO: find better deployment for secrets.js
+var mandrillLogin;
+var mandrillPassword;
+if(app.get('env')==='development'){
+  var secrets = require('./config/secrets');
+  mandrillLogin = secrets.mandrill.login;
+  mandrillPassword = secrets.mandrill.password;
+} else {
+  mandrillLogin = process.env.MANDRILL_LOGIN;
+  mandrillPassword = process.env.MANDRILL_PASSWORD;
+}
 
 /**
  * GET /login
@@ -273,8 +284,8 @@ exports.postReset = function(req, res, next) {
       var smtpTransport = nodemailer.createTransport('SMTP', {
         service: 'Mandrill',
         auth: {
-          user: secrets.mandrill.login,
-          pass: secrets.mandrill.password
+          user: mandrillLogin,
+          pass: mandrillPassword
         }
       });
       var mailOptions = {
@@ -349,8 +360,8 @@ exports.postForgot = function(req, res, next) {
       var smtpTransport = nodemailer.createTransport('SMTP', {
         service: 'Mandrill',
         auth: {
-          user: secrets.mandrill.login,
-          pass: secrets.mandrill.password
+          user: mandrillLogin,
+          pass: mandrillPassword
         }
       });
       var mailOptions = {
