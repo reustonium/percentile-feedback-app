@@ -6,10 +6,15 @@ var passport = require('passport');
 var User = require('../models/User');
 var rescueTime = require('./rescue-time');
 
+var environment;
+module.exports = function SetEnv(env){
+  environment = env;
+};
+
 //TODO: find better deployment for secrets.js
 var mandrillLogin;
 var mandrillPassword;
-if(app.get('env')==='development'){
+if(environment ==='development'){
   var secrets = require('./config/secrets');
   mandrillLogin = secrets.mandrill.login;
   mandrillPassword = secrets.mandrill.password;

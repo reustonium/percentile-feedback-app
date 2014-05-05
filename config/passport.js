@@ -6,6 +6,11 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var User = require('../models/User');
 
+var environment;
+exports = function SetEnv(env){
+  environment = env;
+};
+
 //TODO: find better deployment for secrets.js
 var facebook = {
   clientID: '',
@@ -25,7 +30,7 @@ var google = {
   callbackURL: '/auth/google/callback',
   passReqToCallback: true
 };
-if(app.get('env')==='development'){
+if(environment ==='development'){
   var secrets = require('./config/secrets');
   facebook.clientID = secrets.facebook.clientID;
   facebook.clientSecret = secrets.facebook.clientSecret;

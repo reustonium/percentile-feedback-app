@@ -20,18 +20,18 @@ var expressValidator = require('express-validator');
 var connectAssets = require('connect-assets');
 
 /**
- * Load controllers.
- */
-var homeController = require('./controllers/home');
-var userController = require('./controllers/user');
-var contactController = require('./controllers/contact');
-var gettingStartedController = require('./controllers/gettingStarted');
-var rescuetime = require('./controllers/rescue-time');
-
-/**
  * Create Express server.
  */
 var app = express();
+
+/**
+ * Load controllers.
+ */
+var homeController = require('./controllers/home');
+var userController = require('./controllers/user')(app.get('env'));
+var contactController = require('./controllers/contact');
+var gettingStartedController = require('./controllers/gettingStarted');
+var rescuetime = require('./controllers/rescue-time');
 
 /**
  * API keys + Passport configuration.
@@ -117,37 +117,6 @@ app.use(function(req, res, next) {
   req.session.returnTo = req.path;
   next();
 });
-
-
-/*
-Routes for the API
-*/
-var routerAPI = express.Router();
-routerAPI.use(function(req, res, next){
-	console.log('api request made');
-	next();
-});
-
-routerAPI.route('/fetchData/:user_key/:today')
-	.get(function(req, res){
-		request({
-			url: 'https://www.rescuetime.com/anapi/data?key=' +
-			req.params.user_key +
-			'&format=json&by=interval&rk=productivity&rb=' +
-			moment(req.params.today, "YYYY-MM-DD").subtract('d', 30).format('YYYY-MM-DD') +
-			'&re=' +
-			req.params.today,
-			json: true},
-			function(err, response, body){	
-				if(body.error !== null){
-					console.log("error: " + body);
-					res.json(body);
-				} else {
-					res.json(pfa.parseData(body, moment().format('YYYY-MM-DD')));
-				}
-		});
-	});
-
 
 /**
  * Application routes.
