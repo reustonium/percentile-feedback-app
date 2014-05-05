@@ -38,6 +38,10 @@ var rescuetime = require('./controllers/rescue-time');
  */
 var passportConf = require('./config/passport');
 var secrets = require('./config/secrets');
+if(app.get('env') === 'development'){
+  console.log('Environment === development');
+  secrets.db = 'mongodb://localhost:27017/test';
+}
 
 /**
  * Mongoose configuration.

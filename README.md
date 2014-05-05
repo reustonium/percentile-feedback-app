@@ -16,10 +16,6 @@ The webapp is heavily influenced by [Sahat Yalkabov's](https://github.com/sahat)
  ```
  npm install
  ```
- 
- ```
- bower install
- ```
 
 ### Running the project locally
 1. Host the app on [localhost:8080](http://localhost:8080)
@@ -30,3 +26,8 @@ The webapp is heavily influenced by [Sahat Yalkabov's](https://github.com/sahat)
  
 ### Deploy your own instance to Heroku
 TODO
+* Install Heroku Toolbelt
+* Install Foreman 
+* ```PATH vars```
+* Create Heroku App
+* Setup Config w/ Foreman
