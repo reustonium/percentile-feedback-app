@@ -37,23 +37,12 @@ var rescuetime = require('./controllers/rescue-time');
  * API keys + Passport configuration.
  */
 var passportConf = require('./config/passport');
-
-//TODO: find better deployment for secrets.js
-var db;
-var sessionSecret;
-if(app.get('env')==='development'){
-  var secrets = require('./config/secrets');
-  db = secrets.db;
-  sessionSecret = secrets.sessionSecret;
-} else {
-  db = process.env.MONGODB;
-  sessionSecret = process.env.SESSION_SECRET;
-}
+var secrets = require('./config/secrets');
 
 /**
  * Mongoose configuration.
  */
-mongoose.connect(db);
+mongoose.connect(secrets.db);
 mongoose.connection.on('error', function() {
   console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');
 });
@@ -83,9 +72,9 @@ app.use(expressValidator());
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(session({
-  secret: sessionSecret,
+  secret: secrets.sessionSecret,
   store: new MongoStore({
-    url: db,
+    url: secrets.db,
     auto_reconnect: true
   })
 }));

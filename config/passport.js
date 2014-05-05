@@ -5,47 +5,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var User = require('../models/User');
-
-var environment;
-exports = function SetEnv(env){
-  environment = env;
-};
-
-//TODO: find better deployment for secrets.js
-var facebook = {
-  clientID: '',
-  clientSecret: '',
-  callbackURL: '/auth/facebook/callback',
-  passReqToCallback: true
-};
-var twitter = {
-  consumerKey: '',
-  consumerSecret: '',
-  callbackURL: '/auth/twitter/callback',
-  passReqToCallback: true
-};
-var google = {
-  clientID: '',
-  clientSecret: '',
-  callbackURL: '/auth/google/callback',
-  passReqToCallback: true
-};
-if(environment ==='development'){
-  var secrets = require('./config/secrets');
-  facebook.clientID = secrets.facebook.clientID;
-  facebook.clientSecret = secrets.facebook.clientSecret;
-  twitter.consumerKey = secrets.twitter.consumerKey;
-  twitter.consumerSecret = secrets.twitter.consumerSecret;
-  google.clientID = secrets.google.clientID;
-  google.clientSecret = secrets.google.clientSecret;
-} else {
-  facebook.clientID = process.env.FACEBOOK_ID;
-  facebook.clientSecret = process.env.FACEBOOK_SECRET;
-  twitter.consumerKey = process.env.TWITTER_KEY;
-  twitter.consumerSecret = process.env.TWITTER_SECRET;
-  google.clientID = process.env.GOOGLE_ID;
-  google.clientSecret = process.env.GOOGLE_SECRET;
-}
+var secrets = require('./secrets');
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -87,7 +47,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' }, function(email, passw
  */
 
 // Sign in with Facebook.
-passport.use(new FacebookStrategy(facebook, function(req, accessToken, refreshToken, profile, done) {
+passport.use(new FacebookStrategy(secrets.facebook, function(req, accessToken, refreshToken, profile, done) {
   if (req.user) {
     User.findOne({ facebook: profile.id }, function(err, existingUser) {
       if (existingUser) {
@@ -133,7 +93,7 @@ passport.use(new FacebookStrategy(facebook, function(req, accessToken, refreshTo
 }));
 
 // Sign in with Twitter.
-passport.use(new TwitterStrategy(twitter, function(req, accessToken, tokenSecret, profile, done) {
+passport.use(new TwitterStrategy(secrets.twitter, function(req, accessToken, tokenSecret, profile, done) {
   if (req.user) {
     User.findOne({ twitter: profile.id }, function(err, existingUser) {
       if (existingUser) {
@@ -175,7 +135,7 @@ passport.use(new TwitterStrategy(twitter, function(req, accessToken, tokenSecret
 }));
 
 // Sign in with Google.
-passport.use(new GoogleStrategy(google, function(req, accessToken, refreshToken, profile, done) {
+passport.use(new GoogleStrategy(secrets.google, function(req, accessToken, refreshToken, profile, done) {
   if (req.user) {
     User.findOne({ google: profile.id }, function(err, existingUser) {
       if (existingUser) {
