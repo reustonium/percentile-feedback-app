@@ -28,7 +28,7 @@ var app = express();
  * Load controllers.
  */
 var homeController = require('./controllers/home');
-var userController = require('./controllers/user')(app.get('env'));
+var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
 var gettingStartedController = require('./controllers/gettingStarted');
 var rescuetime = require('./controllers/rescue-time');
