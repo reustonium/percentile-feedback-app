@@ -1,10 +1,22 @@
-var secrets = require('../config/secrets');
 var nodemailer = require("nodemailer");
+
+// TODO: fix this shit, it's terrible.
+var mandrillLogin;
+var mandrillPassword;
+if(environment === 'development'){
+  var secrets = require('./config/secrets');
+  mandrillLogin = mandrillLogin;
+  mandrillPassword= mandrillPassword;
+} else {
+  mandrillLogin = process.env.MANDRILL_LOGIN;
+  mandrillPassword = process.env.MANDRILL_PASSWORD;
+}
+
 var smtpTransport = nodemailer.createTransport('SMTP', {
   service: 'Mandrill',
   auth: {
-       user: secrets.mandrill.login,
-       pass: secrets.mandrill.password
+       user: mandrillLogin,
+       pass: mandrillPassword
   }
 });
 

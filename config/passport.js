@@ -5,7 +5,15 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var User = require('../models/User');
-var secrets = require('./secrets');
+
+// TODO: fix this shit, it's terrible.
+
+if(environment === 'development'){
+  var secrets = require('./config/secrets');
+
+} else {
+
+}
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
