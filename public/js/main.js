@@ -2,8 +2,10 @@ $(document).ready(function() {
 
     var chart;
     var requestToday = function(){
+        //TODO: replace with today's date
+        var today = '2014-05-04';
         $.ajax({
-            url: '/api/getToday/',
+            url: '/api/getDay/' + today,
             success: function(data){
                 chart.title.text = data[0];
                 chart.series[0].setData(data.data,true);

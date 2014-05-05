@@ -20,17 +20,22 @@ exports.validKey = function(key, cb){
 	});
 };
 
-exports.getToday = function(req, res){
+exports.getDay = function(req, res){
 	if(!req.user){
 		res.send(401, 'No user found, please log in.');
 	}
 	var key = req.user.profile.rescueTimeKey;
+	var date = req.params.today;
 	var options = {
-		url: url + key + config,
+		url: url + key + config +
+		'&rb=' + date +
+		'&re=' + date,
 		json: true
 	};
 
 	request(options, function(error, response, body){
+		//TODO: look for rescueTime error
+		//TODO: look for timeout or other error
 		res.json(parseData(body));
 	});
 };
@@ -43,11 +48,10 @@ var parseData = function(rawData){
 
 	for(var i=0; i < rawData.rows.length; i++){
 		if (rawData.rows[i][3] > 0){
-	        var time = parseInt(rawData.rows[i][0].split("T")[1].split(":")[0]);
+	        var time = parseInt(rawData.rows[i][0].split('T')[1].split(':')[0]);
 	        prodData.push([time, rawData.rows[i][1]]);
 	    }
 	}
-
 
 	for(var i=0; i< prodData.length; i++){
 		prod += prodData[i][1];

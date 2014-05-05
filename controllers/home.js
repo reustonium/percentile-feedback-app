@@ -20,7 +20,6 @@ exports.index = function(req, res) {
     res.redirect('/gettingStarted');
   }
   res.render('home', {
-    title: 'Home',
-    data:[1,2,3]
+    title: 'Home'
   });
 };

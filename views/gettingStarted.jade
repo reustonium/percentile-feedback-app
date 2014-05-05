@@ -2,9 +2,48 @@ extends layout
 
 block content
   .page-header
-    h2 Getting Started
-  p sign up
-  p get rescuetime API key
-  p add key to account
-  p view graph
-  p be more productive
+    h1 Getting Started
+  .row
+    .col-sm-8.col-sm-offset-2
+      h2 About quantifyToday
+      p.getting-started-txt
+        |quantifyToday is a percentile feedback application for 
+        a(href='http://rescuetime.com') RescueTime
+        |  users.  It monitor's your time spend on productive tasks
+        |each day and reports a score representing the percentage of
+        |days over the last month whose productive time you've exceeded
+        |today.
+      p.getting-started-txt
+        |Percentile Feedback is a useful way of determing exactly how
+        |productive you've been today.  
+      hr
+      h2 Signing Up
+      p.getting-started-txt 
+        |If you want to authenticate with Facebook, Twitter, 
+        |or Google head over to the 
+        a(href= '/login') Login Page.
+      p.getting-started-txt
+        img.getting-started-img(src='img/login.png')
+        |  If you're more 
+        |comfortable creating a quantifyToday user/pass hit the 
+        a(href='/signup') Signup Page.
+      p.getting-started-txt
+        img.getting-started-img(src='img/signup.png')
+      hr
+      h2 get rescuetime API key
+      p.getting-started-txt
+        |Next visit RescueTime and generate a new API Key
+        a(href='https://www.rescuetime.com/anapi/manage') HERE
+      hr
+      h2 add key to account
+      p.getting-started-txt
+        |Visit your account page and paste your RescueTime API key
+        | and save your account. 
+        img.getting-started-img(src='img/updateprofile.png')
+        | If you have entered a valid key a 
+        |'success' message will let you know everything is cool.
+      hr
+      h2 View Your Graph
+      p.getting-started-txt
+        |Everytime you visit quantifyToday while logged in you can 
+        |see your percentile feedback on the home page.

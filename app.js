@@ -39,7 +39,6 @@ var rescuetime = require('./controllers/rescue-time');
 var passportConf = require('./config/passport');
 var secrets = require('./config/secrets');
 if(app.get('env') === 'development'){
-  console.log('Environment === development');
   secrets.db = 'mongodb://localhost:27017/test';
 }
 
@@ -136,7 +135,7 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
 /**
  * API routes.
  */
-app.get('/api/getToday', rescuetime.getToday);
+app.get('/api/getDay/:today', rescuetime.getDay);
 
 /**
  * OAuth routes for sign-in.
