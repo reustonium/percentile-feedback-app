@@ -26,3 +26,4 @@ node_modules
 
 # App Secrets
 config/secrets.js
+.env
