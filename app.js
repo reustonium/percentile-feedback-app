@@ -1,4 +1,3 @@
-var environment = app.get('env');
 /**
  * Module dependencies.
  */
@@ -32,19 +31,8 @@ var rescuetime = require('./controllers/rescue-time');
 /**
  * API keys + Passport configuration.
  */
+var secrets = require('./config/secrets');
 var passportConf = require('./config/passport');
-
-// TODO: fix this shit, it's terrible.
-var db;
-var sessionSecret;
-if(environment === 'development'){
-  var secrets = require('./config/secrets');
-  db = secrets.db;
-  sessionSecret = secrets.sessionSecret;
-} else {
-  db = process.env.MONGODB;
-  sessionSecret = process.env.SESSION_SECRET;
-}
 
 /**
  * Create Express server.
@@ -54,7 +42,7 @@ var app = express();
 /**
  * Mongoose configuration.
  */
-mongoose.connect(db);
+mongoose.connect(secrets.db);
 mongoose.connection.on('error', function() {
   console.error('✗ MongoDB Connection Error. Please make sure MongoDB is running.');
 });
@@ -84,9 +72,9 @@ app.use(expressValidator());
 app.use(methodOverride());
 app.use(cookieParser());
 app.use(session({
-  secret: sessionSecret,
+  secret: secrets.sessionSecret,
   store: new MongoStore({
-    url: db,
+    url: secrets.db,
     auto_reconnect: true
   })
 }));
@@ -198,7 +186,7 @@ app.use(errorHandler());
  * Start Express server.
  */
 app.listen(app.get('port'), function() {
-  console.log("✔ Express server listening on port %d in %s mode", app.get('port'), environment);
+  console.log("✔ Express server listening on port %d in %s mode", app.get('port'), app.get('env'));
 });
 
 module.exports = app;

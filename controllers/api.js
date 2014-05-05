@@ -1,3 +1,4 @@
+var secrets = require('../config/secrets');
 var User = require('../models/User');
 var querystring = require('querystring');
 var validator = require('validator');
@@ -7,17 +8,6 @@ var _ = require('underscore');
 var graph = require('fbgraph');
 var Twit = require('twit');
 
-// TODO: fix this shit, it's terrible.
-var twitterConsumerKey;
-var twitterConsumerSecret;
-if(environment === 'development'){
-  var secrets = require('./config/secrets');
-  var twitterConsumerKey = secrets.twitter.consumerKey;
-  var twitterConsumerSecret = secrets.twitter.consumerSecret;
-} else {
-  var twitterConsumerKey = process.env.TWITTER_KEY;
-  var twitterConsumerSecret = process.env.TWITTER_SECRET;
-}
 
 /**
  * GET /api
@@ -65,8 +55,8 @@ exports.getFacebook = function(req, res, next) {
 exports.getTwitter = function(req, res, next) {
   var token = _.findWhere(req.user.tokens, { kind: 'twitter' });
   var T = new Twit({
-    consumer_key: twitterConsumerKey,
-    consumer_secret: twitterConsumerSecret,
+    consumer_key: secrets.twitter.consumerKey,
+    consumer_secret: secrets.twitter.consumerSecret,
     access_token: token.accessToken,
     access_token_secret: token.tokenSecret
   });
