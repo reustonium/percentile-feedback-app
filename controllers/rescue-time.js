@@ -40,6 +40,28 @@ exports.getDay = function(req, res){
 	});
 };
 
+exports.getMonth = function(req, res){
+	if(!req.user){
+		res.send(401, 'No user found, please log in.');
+	}
+
+	var key = req.user.profile.rescueTimeKey;
+	var date = req.params.today;
+	var beginDate = moment(date, 'YYYY-MM-DD').subtract('d',30).format('YYYY-MM-DD');
+	var options = {
+		url: url + key + config + 
+		'&rb=' + beginDate +
+		'&re=' + date,
+		json: true
+	};
+
+	console.log(options.url);
+
+	request(options, function(error, response, body){
+		res.json(body);
+	})
+}
+
 var parseData = function(rawData){
 	//Trim the data keeping only "productive time"
 	var prodData = [];

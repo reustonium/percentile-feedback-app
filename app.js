@@ -133,6 +133,7 @@ app.get('/account/unlink/:provider', passportConf.isAuthenticated, userControlle
  * API routes.
  */
 app.get('/api/getDay/:today', rescuetime.getDay);
+app.get('/api/getMonth/:today', rescuetime.getMonth);
 
 /**
  * OAuth routes for sign-in.
