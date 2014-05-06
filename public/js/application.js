@@ -12,4 +12,5 @@
 //= require lib/jquery-2.1.0.min
 //= require lib/bootstrap.min
 //= require lib/highcharts.js
+//= require lib/moment.min.js
 //= require main

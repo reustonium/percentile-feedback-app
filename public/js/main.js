@@ -3,7 +3,8 @@ $(document).ready(function() {
     var chart;
     var requestToday = function(){
         //TODO: replace with today's date
-        var today = '2014-05-04';
+        var today = moment().format('YYYY-MM-DD');
+        console.log('today is this date: ' + today);
         $.ajax({
             url: '/api/getDay/' + today,
             success: function(data){
