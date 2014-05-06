@@ -36,7 +36,9 @@ exports.getDay = function(req, res){
 	request(options, function(error, response, body){
 		//TODO: look for rescueTime error
 		//TODO: look for timeout or other error
-		res.json(parseData(body));
+		var data = {};
+		data[date] = parseDay(body);
+		res.json(data);
 	});
 };
 
@@ -44,25 +46,34 @@ exports.getMonth = function(req, res){
 	if(!req.user){
 		res.send(401, 'No user found, please log in.');
 	}
-
 	var key = req.user.profile.rescueTimeKey;
-	var date = req.params.today;
-	var beginDate = moment(date, 'YYYY-MM-DD').subtract('d',30).format('YYYY-MM-DD');
+	var dateEnd = req.params.today;
+	var dateStart = moment(dateEnd, 'YYYY-MM-DD').subtract('d', 30).format('YYYY-MM-DD');
+
 	var options = {
 		url: url + key + config + 
-		'&rb=' + beginDate +
-		'&re=' + date,
+		'&rb=' + dateStart +
+		'&re=' + dateEnd,
 		json: true
 	};
 
-	console.log(options.url);
-
 	request(options, function(error, response, body){
-		res.json(body);
-	})
-}
+		var rawData = [];
+		var data = {};
+		for(var i=1; i<body.rows.length; i++){
+			if(body.rows[i][0].split('T')[0] === body.rows[i-1][0].split('T')[0]){
+				rawData.push(body.rows[i]);
+			} else {
+				console.log(body.rows[i][0].split('T')[0] + " : " + rawData);
+				data[body.rows[i][0].split('T')[0]] = parseDay[rawData];
+				rawData = [];
+			}
+		}
+		res.json(data);
+	});
+};
 
-var parseData = function(rawData){
+var parseDay = function(rawData){
 	//Trim the data keeping only "productive time"
 	var prodData = [];
 	var data = [];
@@ -86,7 +97,5 @@ var parseData = function(rawData){
         }
         data.push([prodData[i][0], prod]);
 	}
-	return {
-		data: data
-	};
+	return data;
 };
