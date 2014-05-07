@@ -4,13 +4,23 @@ $(document).ready(function() {
     var requestToday = function(){
         //TODO: replace with today's date
         var today = moment().format('YYYY-MM-DD');
-        console.log('today is this date: ' + today);
         $.ajax({
             url: '/api/getDay/' + today,
             success: function(data){
-                console.log(data);
-                chart.title.text = data[0];
-                chart.series[0].setData(data[today],true);
+                chart.title.text = data[1];
+                chart.series[1].setData(data[today],true);
+            },
+            cache: false
+        });
+    };
+
+    var requestMonth = function(){
+        var today = moment().format('YYYY-MM-DD');
+        $.ajax({
+            url: '/api/getMonth/' + today,
+            success: function(data){
+                console.log('my datasz: ' + data);
+                chart.series[0].setData(data, true);
             },
             cache: false
         });
@@ -28,7 +38,8 @@ $(document).ready(function() {
             events: {
                 load: function(){
                     requestToday();
-                    setInterval(requestToday, 1000*60*5);
+                    requestMonth();
+                    setInterval(requestToday, 1000*60*10);
                 }
             }
         },
@@ -91,15 +102,6 @@ $(document).ready(function() {
         contrastTextColor: '#F0F0F3',
         maskColor: 'rgba(255,255,255,0.3)',
         series: [{
-            name: 'today',
-            data: [],
-            type: 'spline',
-            color: 'rgba(144,238,126,1)',
-            marker: {
-                enabled: false
-            }
-        },
-        {
             name: 'hist',
             data: [],
             type: 'scatter',
@@ -107,6 +109,15 @@ $(document).ready(function() {
             marker: {
                 symbol: 'circle',
                 radius: 6
+            }
+        },
+        {
+            name: 'today',
+            data: [],
+            type: 'spline',
+            color: 'rgba(144,238,126,1)',
+            marker: {
+                enabled: false
             }
         }],
         credits: {

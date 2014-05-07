@@ -59,16 +59,20 @@ exports.getMonth = function(req, res){
 
 	request(options, function(error, response, body){
 		var rawData = [];
-		var data = {};
+		var data = [];
 		for(var i=1; i<body.rows.length; i++){
 			if(body.rows[i][0].split('T')[0] === body.rows[i-1][0].split('T')[0]){
 				rawData.push(body.rows[i]);
 			} else {
-				console.log(body.rows[i][0].split('T')[0] + " : " + rawData);
-				data[body.rows[i][0].split('T')[0]] = parseDay[rawData];
-				rawData = [];
+				var tempData = parseDay({rows: rawData});
+				tempData.forEach(addData);
+				rawData= [];
 			}
 		}
+		function addData(element, index, array){
+			data.push(element);
+		}
+		console.log(data);
 		res.json(data);
 	});
 };
