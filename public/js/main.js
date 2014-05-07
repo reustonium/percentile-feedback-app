@@ -8,8 +8,9 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/getDay/' + today,
             success: function(data){
+                console.log(data);
                 chart.title.text = data[0];
-                chart.series[0].setData(data.data,true);
+                chart.series[0].setData(data[today],true);
             },
             cache: false
         });
