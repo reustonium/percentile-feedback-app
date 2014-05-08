@@ -70,9 +70,10 @@ exports.getMonth = function(req, res){
 			}
 		}
 		function addData(element, index, array){
-			data.push(element);
+			var pair = element;
+			pair[0] += Math.random(0.5)-0.5;
+			data.push(pair);
 		}
-		console.log(data);
 		res.json(data);
 	});
 };
@@ -82,6 +83,10 @@ var parseDay = function(rawData){
 	var prodData = [];
 	var data = [];
 	var prod = 0;
+
+	if(!rawData.rows){
+		return data;
+	}
 
 	for(var i=0; i < rawData.rows.length; i++){
 		if (rawData.rows[i][3] > 0){

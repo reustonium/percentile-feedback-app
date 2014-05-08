@@ -1,17 +1,22 @@
 $(document).ready(function() {
 
     var chart;
+    var curProd = 0;
     var requestToday = function(){
         //TODO: replace with today's date
         var today = moment().format('YYYY-MM-DD');
+        
         $.ajax({
             url: '/api/getDay/' + today,
             success: function(data){
                 chart.title.text = data[1];
                 chart.series[1].setData(data[today],true);
+                var prodData = data[today];
+                curProd = prodData[prodData.length - 1][1];
             },
             cache: false
         });
+
     };
 
     var requestMonth = function(){
@@ -19,7 +24,6 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/getMonth/' + today,
             success: function(data){
-                console.log('my datasz: ' + data);
                 chart.series[0].setData(data, true);
             },
             cache: false
