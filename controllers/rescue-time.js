@@ -71,7 +71,10 @@ exports.getMonth = function(req, res){
 		}
 		function addData(element, index, array){
 			var pair = element;
-			pair[0] += Math.random(0.5)-0.5;
+			var spread = 0.45;
+			var offset = Math.random() * (spread + spread) - spread;
+			console.log(offset);
+			pair[0] += offset;
 			data.push(pair);
 		}
 		res.json(data);
